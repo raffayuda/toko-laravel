@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 
 Route::get('/', function () {
@@ -21,5 +22,6 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/dashboard', [DashboardController::class, 'dashboard']);
     
     Route::resource('admin/admin/list', AdminController::class);
+    Route::resource('admin/category', CategoryController::class);
 });
 
