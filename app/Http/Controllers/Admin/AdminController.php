@@ -40,6 +40,7 @@ class AdminController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->is_admin = 1;
+        $user->status = $request->status;
         $user->save();
         return redirect('/admin/admin/list')->with('success', 'Admin Created Successfully');
     }
@@ -57,7 +58,9 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data['title'] = "Edit Admin";
+        $data['data'] = User::find($id);
+        return view('admin.admin.edit', $data);
     }
 
     /**
@@ -65,7 +68,16 @@ class AdminController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->is_admin = 1;
+        if (!empty($request->password)) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->status = $request->status;
+        $user->save();
+        return redirect('/admin/admin/list')->with('success', 'Admin Updated Successfully');
     }
 
     /**
@@ -73,6 +85,8 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+        return redirect('/admin/admin/list')->with('success', 'Admin Deleted Successfully');
     }
 }

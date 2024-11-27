@@ -6,16 +6,14 @@
     <section class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
-            <div class="col-sm-6">
+            <div class="col-sm-10">
               <h1>Admin List</h1>
-              @include('admin.layouts._message')
             </div>
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                <a href="{{url('admin/admin/list/create')}}" class="btn btn-success text-right">Add New Admin</a>
-              </ol>
+            <div class="col">
+              <a href="{{url('admin/admin/list/create')}}" class="btn btn-success " style="text-align: right">Add New Admin</a>
             </div>
           </div>
+          @include('admin.layouts._message')
         </div><!-- /.container-fluid -->
       </section>
   
@@ -36,7 +34,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <th class="text-center">Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -46,9 +44,13 @@
                         <td>{{$item->name}}</td>
                         <td>{{$item->email}}</td>
                         <td>{{($item->status == 0) ? 'Active' : 'Inactive'}}</td>
-                        <td>
-                          <a href="">Hapus</a>
-                          <a href="">Edit</a>
+                        <td class="d-flex justify-content-center">
+                          <form action="{{url('admin/admin/list/'.$item->id)}}" method="POST">
+                            @method('DELETE')
+                            @csrf
+                            <button class="btn btn-sm btn-danger" type="submit">Hapus</button>
+                          </form> | 
+                          <a href="{{url('admin/admin/list/'.$item->id.'/edit')}}" class="btn btn-sm btn-warning">Edit</a>
                         </td>
                       </tr>
                       @endforeach
