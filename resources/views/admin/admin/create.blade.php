@@ -29,21 +29,24 @@
                       <input type="hidden" name="is_admin" value="1">
                       <div class="form-group">
                         <label>Name</label>
-                        <input type="text" name="name" class="form-control" placeholder="Enter Name">
+                        <input type="text" name="name" class="form-control" value="{{ old('name')}}" placeholder="Enter Name">
+                        {{ $errors->first('name') }}
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" name="email" class="form-control" placeholder="Enter Email">
+                        <input type="email" name="email" class="form-control" placeholder="Enter Email" value="{{ old('email')}}">
+                        <p class="text-danger">{{ $errors->first('email') }}</p>
                       </div>
                       <div class="form-group">
                         <label>Password</label>
                         <input type="password" name="pasword" class="form-control" placeholder="Enter Password">
+                        {{ $errors->first('password') }}
                       </div>
                       <div class="form-group">
                         <label>Status</label>
                         <select name="status" id="" class="form-control">
-                            <option value="0">Active</option>
-                            <option value="1">Inactve</option>
+                            <option value="0" {{(old('status') == 0 ? 'selected' : '')}}>Active</option>
+                            <option value="1" {{(old('status') == 1 ? 'selected' : '')}}>Inactve</option>
                         </select>
                       </div>
                      

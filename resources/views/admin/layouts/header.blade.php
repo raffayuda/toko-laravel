@@ -107,14 +107,21 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <div class="brand-link" style="text-align: center">
-      
       <span class="brand-text">Ecommerce</span>
     </div>
-
+    
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{{asset('assets/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block text-white">{{ auth()->user()->name }}</a>
+        </div>
+      </div>
       
 
       <!-- Sidebar Menu -->

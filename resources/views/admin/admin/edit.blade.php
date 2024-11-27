@@ -30,11 +30,13 @@
                       <input type="hidden" name="is_admin" value="1">
                       <div class="form-group">
                         <label>Name</label>
-                        <input type="text" name="name" class="form-control" placeholder="Enter Name" value="{{ $data->name }}" required>
+                        <input type="text" name="name" class="form-control" placeholder="Enter Name" value="{{ old('name', $data->name) }}" required>
+                        <p class="text-danger">{{ $errors->first('name') }}</p>
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" name="email" class="form-control" placeholder="Enter Email" value="{{ $data->email }}" required>
+                        <input type="email"  name="email" class="form-control" placeholder="Enter Email" value="{{ old('email', $data->email) }}" required>
+                        <p class="text-danger">{{ $errors->first('email') }}</p>
                       </div>
                       <div class="form-group">
                         <label>Password</label>
