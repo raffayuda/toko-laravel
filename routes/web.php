@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
@@ -27,5 +28,6 @@ Route::group(['middleware' => 'admin'], function () {
     Route::resource('admin/category', CategoryController::class);
     Route::resource('admin/subcategory', SubCategoryController::class);
     Route::resource('admin/product', ProductController::class);
+    Route::resource('admin/brand', BrandController::class);
 });
 

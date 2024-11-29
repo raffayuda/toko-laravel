@@ -19,11 +19,12 @@
                 <!-- general form elements -->
                 <div class="card card-primary">
                   <div class="card-header">
-                    <h3 class="card-title">Add New Product</h3>
+                    <h3 class="card-title">Edit Product</h3>
                   </div>
                   <!-- /.card-header -->
                   <!-- form start -->
-                  <form action="{{ url('admin/product') }}" method="POST">
+                  <form action="{{ url('admin/product', $data->id) }}" method="POST">
+                    @method('PUT')
                     @csrf
                     <div class="card-body">
                       <div class="form-group">

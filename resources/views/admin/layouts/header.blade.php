@@ -174,6 +174,14 @@
             </p>
           </a>
         </li>
+          <li class="nav-item">
+          <a href="{{url('admin/brand')}}" class="nav-link @if(Request::segment(2) == 'brand') active @endif">
+            <i class="nav-icon fas fa-product-hunt"></i>
+            <p>
+              Brand
+            </p>
+          </a>
+        </li>
 
           <li class="nav-item">
             <a href="{{url('admin/logout')}}" class="nav-link">

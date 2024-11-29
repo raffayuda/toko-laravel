@@ -19,17 +19,17 @@
                 <!-- general form elements -->
                 <div class="card card-primary">
                   <div class="card-header">
-                    <h3 class="card-title">Edit Category</h3>
+                    <h3 class="card-title">Add New Brand</h3>
                   </div>
                   <!-- /.card-header -->
                   <!-- form start -->
-                  <form action="{{ url('admin/category/'.$data->id) }}" method="POST">
+                  <form action="{{ url('admin/brand/'.$data->id) }}" method="POST">
                     @method('PUT')
                     @csrf
                     <div class="card-body">
                       <div class="form-group">
-                        <label>Category Name <span class="text-danger">*</span></label>
-                        <input type="text" name="name" class="form-control" required value="{{ old('name', $data->name)}}" placeholder="Enter Category Name">
+                        <label>Brand Name <span class="text-danger">*</span></label>
+                        <input type="text" name="name" class="form-control" required value="{{ old('name', $data->name)}}" placeholder="Enter Brand Name">
                         {{ $errors->first('name') }}
                       </div>
                       <div class="form-group">

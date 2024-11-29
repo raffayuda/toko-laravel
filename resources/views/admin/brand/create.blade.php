@@ -19,29 +19,28 @@
                 <!-- general form elements -->
                 <div class="card card-primary">
                   <div class="card-header">
-                    <h3 class="card-title">Edit Category</h3>
+                    <h3 class="card-title">Add New Brand</h3>
                   </div>
                   <!-- /.card-header -->
                   <!-- form start -->
-                  <form action="{{ url('admin/category/'.$data->id) }}" method="POST">
-                    @method('PUT')
+                  <form action="{{ url('admin/brand') }}" method="POST">
                     @csrf
                     <div class="card-body">
                       <div class="form-group">
-                        <label>Category Name <span class="text-danger">*</span></label>
-                        <input type="text" name="name" class="form-control" required value="{{ old('name', $data->name)}}" placeholder="Enter Category Name">
+                        <label>Brand Name <span class="text-danger">*</span></label>
+                        <input type="text" name="name" class="form-control" required value="{{ old('name')}}" placeholder="Enter Brand Name">
                         {{ $errors->first('name') }}
                       </div>
                       <div class="form-group">
                         <label>Slug <span class="text-danger">*</span></label>
-                        <input type="text" name="slug" class="form-control" required value="{{ old('slug', $data->slug)}}" placeholder="Enter Slug">
+                        <input type="text" name="slug" class="form-control" required value="{{ old('slug')}}" placeholder="Enter Slug">
                         {{ $errors->first('slug') }}
                       </div>
                       <div class="form-group">
                         <label>Status <span class="text-danger">*</span></label>
                         <select name="status" id="" class="form-control">
-                            <option value="0" {{(old('status', $data->status) == 0 ? 'selected' : '')}}>Active</option>
-                            <option value="1" {{(old('status', $data->status) == 1 ? 'selected' : '')}}>Inactve</option>
+                            <option value="0" {{(old('status') == 0 ? 'selected' : '')}}>Active</option>
+                            <option value="1" {{(old('status') == 1 ? 'selected' : '')}}>Inactve</option>
                         </select>
                       </div>
                       
@@ -49,15 +48,15 @@
   
                       <div class="form-group">
                           <label for="">Meta Title <span class="text-danger">*</span></label>
-                          <input type="text" required class="form-control" name="meta_title" value="{{ old('meta_title', $data->meta_title)}}" placeholder="Meta Title">
+                          <input type="text" required class="form-control" name="meta_title" value="{{ old('meta_title')}}" placeholder="Meta Title">
                       </div>
                       <div class="form-group">
                           <label for="">Meta Description</label>
-                          <textarea name="meta_description" id="" cols="30" rows="10" placeholder="Meta Description" class="form-control">{{ old('meta_description', $data->meta_description) }}</textarea>
+                          <textarea name="meta_description" id="" cols="30" rows="10" placeholder="Meta Description" class="form-control">{{ old('meta_description') }}</textarea>
                       </div>
                       <div class="form-group">
                           <label for="">Meta Keywords</label>
-                          <input type="text" class="form-control" name="meta_keywords" value="{{ old('meta_keywords', $data->meta_keywords)}}" placeholder="Meta Keywords">
+                          <input type="text" class="form-control" name="meta_keywords" value="{{ old('meta_keywords')}}" placeholder="Meta Keywords">
                       </div>
                     </div>
 
