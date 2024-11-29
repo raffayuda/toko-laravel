@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubCategoryController;
 
 Route::get('/', function () {
@@ -25,5 +26,6 @@ Route::group(['middleware' => 'admin'], function () {
     Route::resource('admin/admin/list', AdminController::class);
     Route::resource('admin/category', CategoryController::class);
     Route::resource('admin/subcategory', SubCategoryController::class);
+    Route::resource('admin/product', ProductController::class);
 });
 
