@@ -24,6 +24,6 @@ Route::group(['middleware' => 'admin'], function () {
     
     Route::resource('admin/admin/list', AdminController::class);
     Route::resource('admin/category', CategoryController::class);
-    Route::resource('admin/sub_category', SubCategoryController::class);
+    Route::resource('admin/subcategory', SubCategoryController::class);
 });
 

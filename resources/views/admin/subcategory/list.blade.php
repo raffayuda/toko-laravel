@@ -10,7 +10,7 @@
               <h1>Sub Category List</h1>
             </div>
             <div class="col">
-              <a href="{{url('admin/category/create')}}" class="btn btn-success " style="text-align: right">Add New Category</a>
+              <a href="{{url('admin/subcategory/create')}}" class="btn btn-success " style="text-align: right">Add New Sub Category</a>
             </div>
           </div>
           @include('admin.layouts._message')
@@ -47,8 +47,8 @@
                       @forelse ($datas as $item)
                           <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td>{{$item->name}}</td>
                             <td>{{$item->category_name}}</td>
+                            <td>{{$item->name}}</td>
                             <td>{{$item->slug}}</td>
                             <td>{{$item->meta_title}}</td>
                             <td>{{$item->meta_description}}</td>
@@ -57,12 +57,12 @@
                             <td>{{($item->status == 0) ? 'Active' : 'Inactive'}}</td>
                             <td>{{ $item->created_at->format('d-m-Y')}}</td>
                             <td class="d-flex justify-content-center">
-                              <form action="{{url('admin/category/'.$item->id)}}" method="POST">
+                              <form action="{{url('admin/subcategory/'.$item->id)}}" method="POST">
                                 @method('DELETE')
                                 @csrf
                                 <button class="btn btn-sm btn-danger" type="submit">Hapus</button>
                               </form> | 
-                              <a href="{{url('admin/category/'.$item->id.'/edit')}}" class="btn btn-sm btn-warning">Edit</a>
+                              <a href="{{url('admin/subcategory/'.$item->id.'/edit')}}" class="btn btn-sm btn-warning">Edit</a>
                             </td>
                           </tr>
                       @empty

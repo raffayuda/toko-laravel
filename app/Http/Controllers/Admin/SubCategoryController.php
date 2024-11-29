@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class SubCategoryController extends Controller
 {
@@ -14,9 +16,10 @@ class SubCategoryController extends Controller
     public function index()
     {
         $data['title'] = "Sub Category List";
-        $data['datas'] = SubCategory::select('sub_categories.*', 'categories.name as category_name')
+        $data['datas'] = SubCategory::select('sub_categories.*', 'categories.name as category_name', 'users.name as created_by')
+                                    ->where('sub_categories.deleted_at', null)
                                     ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
-                                    ->join('users', 'sub_categories.created_by', '=', 'users.id')
+                                    ->leftjoin('users', 'users.id', '=', 'sub_categories.created_by')
                                     ->paginate(20);
         return view('admin.subcategory.list', $data);
     }
@@ -26,7 +29,11 @@ class SubCategoryController extends Controller
      */
     public function create()
     {
-        //
+        $data['categories'] = Category::select('categories.*', 'users.name as created_by')
+                                        ->leftJoin('users', 'users.id', '=', 'categories.created_by')
+                                        ->get();
+        $data['title'] = "Add New Sub Category";
+        return view('admin.subcategory.create', $data);
     }
 
     /**
@@ -34,7 +41,17 @@ class SubCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $subcategory = new SubCategory();
+        $subcategory->category_id = trim($request->category_id);
+        $subcategory->name = trim($request->name);
+        $subcategory->slug = trim($request->slug);
+        $subcategory->status = trim($request->status);
+        $subcategory->meta_title = trim($request->meta_title);
+        $subcategory->meta_description = trim($request->meta_description); 
+        $subcategory->meta_keywords = trim($request->meta_keywords); 
+        $subcategory->created_by = Auth::user()->id; 
+        $subcategory->save();
+        return redirect('admin/subcategory')->with('success', 'Sub Category Created Successfully');
     }
 
     /**
@@ -50,7 +67,12 @@ class SubCategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data['title'] = "Edit Sub Category";
+        $data['data'] = SubCategory::find($id);
+        $data['categories'] = Category::select('categories.*', 'users.name as created_by')
+                                        ->leftJoin('users', 'users.id', '=', 'categories.created_by')
+                                        ->get();
+        return view('admin.subcategory.edit', $data);
     }
 
     /**
@@ -58,7 +80,16 @@ class SubCategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $subcategory = SubCategory::find($id);
+        $subcategory->category_id = trim($request->category_id);
+        $subcategory->name = trim($request->name);
+        $subcategory->slug = trim($request->slug);
+        $subcategory->status = trim($request->status);
+        $subcategory->meta_title = trim($request->meta_title);
+        $subcategory->meta_description = trim($request->meta_description); 
+        $subcategory->meta_keywords = trim($request->meta_keywords); 
+        $subcategory->save();
+        return redirect('admin/subcategory')->with('success', 'Sub Category Updated Successfully');
     }
 
     /**
