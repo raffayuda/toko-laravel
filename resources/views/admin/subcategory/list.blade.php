@@ -74,6 +74,7 @@
                 <!-- /.card-body -->
               </div>
               <!-- /.card -->
+              {{ $datas->links() }}
             </div>
            
           </div>
