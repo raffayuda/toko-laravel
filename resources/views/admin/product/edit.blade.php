@@ -57,7 +57,9 @@
                           <div class="form-group">
                             <label>Sub Category <span class="text-danger">*</span></label>
                             <select name="sub_category_id" class="form-control" id="getSubCategory">
-                                <option value="">Select</option>
+                                @foreach ($subcategories as $item)
+                                    <option {{ (old('sub_category_id', $data->sub_category_id) == $item->id ? 'selected' : '') }} value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
                             </select>
                           </div>
                         </div>
@@ -67,7 +69,7 @@
                             <select name="brand_id" class="form-control" id="">
                                 <option value="">Select</option>
                                 @foreach ($brand as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    <option {{ (old('brand_id', $data->brand_id) == $item->id ? 'selected' : '') }} value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
                           </div>
@@ -78,17 +80,22 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>Color <span class="text-danger">*</span></label>
-                            @foreach ($color as $item)
-                            <div>
-                              <label for="">
-                                <input type="checkbox" name="color_id[]" value="{{ $item->id }}"> {{ $item->name }}
-                              </label>
-                            </div>
+                            @foreach ($color as $item)  
+                              @php
+                                $checked = '';
+                                $existingColor = $data->getColor->where('color_id', $item->id)->first();
+                                if($existingColor) {
+                                  $checked = 'checked';
+                                }
+                              @endphp
+                              <div>
+                                <label>
+                                  <input {{ $checked }} type="checkbox" name="color_id[]" value="{{ $item->id }}"> {{ $item->name }}
+                                </label>
+                              </div>
                             @endforeach
-                          
                           </div>
                         </div>
-                        
                       </div>
                       
                       <hr>
@@ -97,14 +104,14 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Price ($)<span class="text-danger">*</span></label>
-                            <input type="text" name="price" class="form-control" required value="" placeholder="Enter Price">
+                            <input type="text" name="price" class="form-control" required value="{{ old('price', $data->price) }}" placeholder="Enter Price">
                             {{ $errors->first('price') }}
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Old Price ($)<span class="text-danger">*</span></label>
-                            <input type="text" name="old_price" class="form-control" required value="" placeholder="Enter Old Price">
+                            <input type="text" name="old_price" class="form-control" required value="{{ old('old_price', $data->old_price) }}" placeholder="Enter Old Price">
                             {{ $errors->first('old_price') }}
                           </div>
                         </div>
@@ -150,7 +157,7 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>Short Description <span class="text-danger">*</span></label>
-                            <textarea name="short_description" id="" rows="5" class="form-control" placeholder="Enter Short Description"></textarea>
+                            <textarea name="short_description" id="" rows="5" class="form-control" placeholder="Enter Short Description">{{ old('short_description', $data->short_description) }}</textarea>
                           </div>
                         </div>
                         
@@ -159,7 +166,7 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>Description <span class="text-danger">*</span></label>
-                            <textarea name="description" id="tiny" rows="5" class="form-control editor" placeholder="Enter Description"></textarea>
+                            <textarea name="description" id="tiny" rows="5" class="form-control editor" placeholder="Enter Description">{{ old('description', $data->description) }}</textarea>
                           </div>
                         </div>
                         
@@ -168,7 +175,7 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>Additional Information <span class="text-danger">*</span></label>
-                            <textarea name="additional_information" id="" rows="5" class="form-control editor" placeholder="Enter additional information"></textarea>
+                            <textarea name="additional_information" id="" rows="5" class="form-control editor" placeholder="Enter additional information">{{ old('additional_information', $data->additional_information) }}</textarea>
                           </div>
                         </div>
                         
@@ -177,7 +184,7 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>Shipping Returns <span class="text-danger">*</span></label>
-                            <textarea name="shipping_returns" id="" rows="5" class="form-control editor" placeholder="Enter Shipping Returns"></textarea>
+                            <textarea name="shipping_returns" id="" rows="5" class="form-control editor" placeholder="Enter Shipping Returns">{{ old('shipping_returns', $data->shipping_returns) }}</textarea>
                           </div>
                         </div>
                         

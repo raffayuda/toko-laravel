@@ -13,4 +13,9 @@ class Product extends Model
     use SoftDeletes;
     protected $table = 'products';
     protected $dates = ['deleted_at'];
+
+    public function getColor()
+    {
+        return $this->hasMany(ProductColor::class, 'product_id')->select('product_colors.*');
+    }
 }

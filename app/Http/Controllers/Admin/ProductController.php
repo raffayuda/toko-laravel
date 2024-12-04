@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Brand;
+use App\Models\Color;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Color;
+use App\Models\ProductColor;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -84,6 +86,7 @@ class ProductController extends Controller
                                     ->where('categories.status', 0)
                                     ->orderBy('categories.name', 'asc')
                                     ->get();
+            $data['subcategories'] = SubCategory::where('category_id', $product->category_id)->where('deleted_at', null)->get();
             $data['data'] = $product;
             $data['title'] = "Edit Product";
             return view('admin.product.edit', $data);
@@ -95,7 +98,37 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        // dd($request->all());
+        $product = Product::find($id);
+        if(!empty($product)) {
+            $product->title = $request->title;
+            $product->sku = $request->sku;
+            $product->sub_category_id = $request->sub_category_id;
+            $product->category_id = $request->category_id;
+            $product->brand_id = $request->brand_id;
+            $product->price = $request->price;
+            $product->old_price = $request->old_price;
+            $product->short_description = $request->short_description;
+            $product->description = $request->description;
+            $product->additional_information = $request->additional_information;
+            $product->shipping_returns = $request->shipping_returns;
+            $product->status = $request->status;
+            $product->save();
+            ProductColor::where('product_id', $product->id)->delete();
+            if(!empty($request->color_id)) {
+                foreach ($request->color_id as $key => $value) {
+                    $productColor = new ProductColor();
+                    $productColor->product_id = $product->id;
+                    $productColor->color_id = $value;
+                    $productColor->save();
+                }
+            }
+            return redirect('admin/product/'. $product->id . '/edit')->with('success', 'Product Updated Successfully');
+        }else{
+            abort(404);
+        }
+
     }
 
     /**
