@@ -159,7 +159,7 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>Description <span class="text-danger">*</span></label>
-                            <textarea name="description" id="" rows="5" class="form-control" placeholder="Enter Description"></textarea>
+                            <textarea name="description" id="tiny" rows="5" class="form-control editor" placeholder="Enter Description"></textarea>
                           </div>
                         </div>
                         
@@ -168,7 +168,7 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>Additional Information <span class="text-danger">*</span></label>
-                            <textarea name="additional_information" id="" rows="5" class="form-control" placeholder="Enter additional information"></textarea>
+                            <textarea name="additional_information" id="" rows="5" class="form-control editor" placeholder="Enter additional information"></textarea>
                           </div>
                         </div>
                         
@@ -177,7 +177,7 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>Shipping Returns <span class="text-danger">*</span></label>
-                            <textarea name="shipping_returns" id="" rows="5" class="form-control" placeholder="Enter Shipping Returns"></textarea>
+                            <textarea name="shipping_returns" id="" rows="5" class="form-control editor" placeholder="Enter Shipping Returns"></textarea>
                           </div>
                         </div>
                         
@@ -195,8 +195,6 @@
                         </div>
                       </div>
                       
-                      
-                      
                     </div>
 
                     <!-- /.card-body -->
@@ -207,8 +205,6 @@
                   </form>
                 </div>
                 <!-- /.card -->
-
-    
               </div>
            
           </div>
@@ -218,13 +214,36 @@
       </section>
       <!-- /.content -->
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script type="text/javascript">
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- TinyMCE -->
+    <script src="https://cdn.tiny.cloud/1/cy85fq5hivrxpljukn7l4b48574018i8e3tkblo0i341v648/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+
+    <script>
+      // TinyMCE Initialization
+      tinymce.init({
+        selector: '.editor',
+        height: 300,
+        plugins: [
+          'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+          'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+          'insertdatetime', 'media', 'table', 'help', 'wordcount'
+        ],
+        toolbar: 'undo redo | blocks | ' +
+          'bold italic backcolor | alignleft aligncenter ' +
+          'alignright alignjustify | bullist numlist outdent indent | ' +
+          'removeformat | help',
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+      });
+
+      // Size handling
       $('body').delegate('.AddSize', 'click', function(e){
-        var i = 1000;
-        e.preventDefault();
         var i = $('#AppendSize tr').length + 1;
-        var html = `<tr id="DeleteSize ${i}" >
+        e.preventDefault();
+        var html = `<tr id="DeleteSize${i}">
                       <td>
                         <input type="text" name="size_name" value="${i}" class="form-control" placeholder="Enter Size Name">
                       </td>
@@ -236,13 +255,14 @@
                       </td>
                     </tr>`;
         $('#AppendSize').append(html);
-      })
+      });
 
       $('body').delegate('.RemoveSize', 'click', function(e){
         e.preventDefault();
         $(this).parent().parent().remove();
-      })
+      });
 
+      // Category handling
       $('body').delegate('#ChangeCategory', 'change', function(e){
         var id = $(this).val();
         $.ajax({
@@ -259,7 +279,7 @@
           error: function(data){
             
           }
-        })
-      })
+        });
+      });
     </script>
 @endsection
