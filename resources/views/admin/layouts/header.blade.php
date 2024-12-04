@@ -168,7 +168,7 @@
 
           <li class="nav-item">
           <a href="{{url('admin/product')}}" class="nav-link @if(Request::segment(2) == 'product') active @endif">
-            <i class="nav-icon fas fa-product-hunt"></i>
+            <i class="nav-icon fas fa-list-alt"></i>
             <p>
               Product
             </p>
@@ -176,9 +176,17 @@
         </li>
           <li class="nav-item">
           <a href="{{url('admin/brand')}}" class="nav-link @if(Request::segment(2) == 'brand') active @endif">
-            <i class="nav-icon fas fa-product-hunt"></i>
+            <i class="nav-icon fas fa-list-alt"></i>
             <p>
               Brand
+            </p>
+          </a>
+        </li>
+          <li class="nav-item">
+          <a href="{{url('admin/color')}}" class="nav-link @if(Request::segment(2) == 'color') active @endif">
+            <i class="nav-icon fas fa-list-alt"></i>
+            <p>
+              Color
             </p>
           </a>
         </li>

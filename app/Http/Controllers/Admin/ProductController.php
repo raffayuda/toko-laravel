@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Brand;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Color;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -15,6 +18,11 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $data['datas'] = Product::select('products.*', 'users.name as created_by')
+        ->where('products.deleted_at', null)
+        ->leftJoin('users', 'users.id', '=', 'products.created_by')
+        ->orderBy('id', 'desc')
+        ->paginate(20);
         $data['title'] = "Product List";
         return view('admin.product.list', $data);
     }
@@ -66,9 +74,20 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $data['title'] = "Edit Product";
-        $data['data'] = Product::find($id);
-        return view('admin.product.edit', $data);
+        $product = Product::find($id);
+        if(!empty($product)) {
+            $data['brand'] = Brand::where('status', 0)->where('deleted_at', null)->orderBy('name', 'asc')->get();
+            $data['color'] = Color::where('status', 0)->where('deleted_at', null)->orderBy('name', 'asc')->get();
+            $data['categories'] = Category::select('categories.*')
+                                    ->leftJoin('users', 'users.id', '=', 'categories.created_by')
+                                    ->where('categories.deleted_at', null)
+                                    ->where('categories.status', 0)
+                                    ->orderBy('categories.name', 'asc')
+                                    ->get();
+            $data['data'] = $product;
+            $data['title'] = "Edit Product";
+            return view('admin.product.edit', $data);
+        }
     }
 
     /**

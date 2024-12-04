@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubCategoryController;
@@ -27,7 +28,9 @@ Route::group(['middleware' => 'admin'], function () {
     Route::resource('admin/admin/list', AdminController::class);
     Route::resource('admin/category', CategoryController::class);
     Route::resource('admin/subcategory', SubCategoryController::class);
+    Route::post('admin/get_sub_category', [SubCategoryController::class, 'get_sub_category']);
     Route::resource('admin/product', ProductController::class);
     Route::resource('admin/brand', BrandController::class);
+    Route::resource('admin/color', ColorController::class);
 });
 
