@@ -123,41 +123,19 @@
                                     <th>Action</th>
                                   </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="AppendSize">
                                   <tr>
                                     <td>
-                                      <input type="text" name="size_name[]" class="form-control" placeholder="Enter Size Name">
+                                      <input type="text" name="name" class="form-control" placeholder="Enter Size Name">
                                     </td>
                                     <td>
-                                      <input type="text" name="size_price[]" class="form-control" placeholder="Enter Size Price">
+                                      <input type="text" name="price" class="form-control" placeholder="Enter Size Price">
                                     </td>
                                     <td>
-                                      <button type="button" class="btn btn-primary btn-sm">Add</button>
-                                      <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                                      <button type="button" class="btn btn-primary btn-sm AddSize">Add</button>
                                     </td>
                                   </tr>
-                                  <tr>
-                                    <td>
-                                      <input type="text" name="size_name[]" class="form-control" placeholder="Enter Size Name">
-                                    </td>
-                                    <td>
-                                      <input type="text" name="size_price[]" class="form-control" placeholder="Enter Size Price">
-                                    </td>
-                                    <td>
-                                      <button type="button" class="btn btn-danger btn-sm">Delete</button>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <input type="text" name="size_name[]" class="form-control" placeholder="Enter Size Name">
-                                    </td>
-                                    <td>
-                                      <input type="text" name="size_price[]" class="form-control" placeholder="Enter Size Price">
-                                    </td>
-                                    <td>
-                                      <button type="button" class="btn btn-danger btn-sm">Delete</button>
-                                    </td>
-                                  </tr>
+                                  
                                 </tbody>
                               </table>
                             </div>
@@ -242,6 +220,29 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript">
+      $('body').delegate('.AddSize', 'click', function(e){
+        var i = 1000;
+        e.preventDefault();
+        var i = $('#AppendSize tr').length + 1;
+        var html = `<tr id="DeleteSize ${i}" >
+                      <td>
+                        <input type="text" name="size_name" value="${i}" class="form-control" placeholder="Enter Size Name">
+                      </td>
+                      <td>
+                        <input type="text" name="size_price" class="form-control" placeholder="Enter Size Price">
+                      </td>
+                      <td>
+                        <button type="button" id="${i}" class="btn btn-danger btn-sm RemoveSize">Remove</button>
+                      </td>
+                    </tr>`;
+        $('#AppendSize').append(html);
+      })
+
+      $('body').delegate('.RemoveSize', 'click', function(e){
+        e.preventDefault();
+        $(this).parent().parent().remove();
+      })
+
       $('body').delegate('#ChangeCategory', 'change', function(e){
         var id = $(this).val();
         $.ajax({
