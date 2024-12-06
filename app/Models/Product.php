@@ -18,4 +18,9 @@ class Product extends Model
     {
         return $this->hasMany(ProductColor::class, 'product_id')->select('product_colors.*');
     }
+
+    public function getSize()
+    {
+        return $this->hasMany(ProductSize::class, 'product_id')->select('product_sizes.*');
+    }
 }

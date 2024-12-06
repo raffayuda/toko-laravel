@@ -16,6 +16,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
+              @include('admin.layouts._message')
                 <!-- general form elements -->
                 <div class="card card-primary">
                   <div class="card-header">
@@ -133,10 +134,10 @@
                                 <tbody id="AppendSize">
                                   <tr>
                                     <td>
-                                      <input type="text" name="name" class="form-control" placeholder="Enter Size Name">
+                                      <input type="text" name="size[100][name]" class="form-control" placeholder="Enter Name">
                                     </td>
                                     <td>
-                                      <input type="text" name="price" class="form-control" placeholder="Enter Size Price">
+                                      <input type="text" name="size[100][price]" class="form-control" placeholder="Enter Price">
                                     </td>
                                     <td>
                                       <button type="button" class="btn btn-primary btn-sm AddSize">Add</button>
@@ -144,6 +145,29 @@
                                   </tr>
                                   
                                 </tbody>
+                                @php
+                                  $count = 1;
+                                @endphp
+                                @foreach ($data->getSize as $item)    
+                                <tbody id="AppendSize">
+                                  <tr id="DeleteSize{{ $count }}">
+                                    <td>
+                                      <input type="text" value="{{ $item->name }}" name="size[{{ $count }}][name]" class="form-control" placeholder="Enter Name">
+                                    </td>
+                                    <td>
+                                      <input type="text" value="{{ $item->price }}" name="size[{{ $count }}][price]" class="form-control" placeholder="Enter Price">
+                                    </td>
+                                    <td>
+                                      <button type="button" class="btn btn-danger btn-sm RemoveSize">Remove</button>
+                                    </td>
+                                  </tr>
+                                  
+                                </tbody>
+                                @php
+                                    $count++;
+                                @endphp
+                                @endforeach
+                               
                               </table>
                             </div>
                           </div>
@@ -248,14 +272,15 @@
 
       // Size handling
       $('body').delegate('.AddSize', 'click', function(e){
+        
         var i = $('#AppendSize tr').length + 1;
         e.preventDefault();
         var html = `<tr id="DeleteSize${i}">
                       <td>
-                        <input type="text" name="size_name" value="${i}" class="form-control" placeholder="Enter Size Name">
+                        <input type="text" name="size['${i}'][name]" class="form-control" placeholder="Enter Size Name">
                       </td>
                       <td>
-                        <input type="text" name="size_price" class="form-control" placeholder="Enter Size Price">
+                        <input type="text" name="size['${i}'][price]" class="form-control" placeholder="Enter Size Price">
                       </td>
                       <td>
                         <button type="button" id="${i}" class="btn btn-danger btn-sm RemoveSize">Remove</button>

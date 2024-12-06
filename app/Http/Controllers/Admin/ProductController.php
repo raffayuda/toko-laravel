@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ProductColor;
+use App\Models\ProductSize;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -124,6 +125,21 @@ class ProductController extends Controller
                     $productColor->save();
                 }
             }
+
+            ProductSize::where('product_id', $product->id)->delete();
+
+            if(!empty($request->size)) {
+                foreach ($request->size as $size) {
+                    if(!empty($size['name'])) {  
+                        $saveSize = new ProductSize();
+                        $saveSize->product_id = $product->id; 
+                        $saveSize->name = $size['name'];
+                        $saveSize->price = !empty($size['price']) ? $size['price'] : 0;
+                        $saveSize->save(); 
+                    }
+                }
+            }
+
             return redirect('admin/product/'. $product->id . '/edit')->with('success', 'Product Updated Successfully');
         }else{
             abort(404);
