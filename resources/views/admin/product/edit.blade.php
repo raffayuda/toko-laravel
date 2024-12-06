@@ -24,7 +24,7 @@
                   </div>
                   <!-- /.card-header -->
                   <!-- form start -->
-                  <form action="{{ url('admin/product', $data->id) }}" method="POST">
+                  <form action="{{ url('admin/product', $data->id) }}" method="POST" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
                     <div class="card-body">
@@ -175,6 +175,17 @@
                         
                       </div>
 
+                      <hr>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group ">
+                            <label>Image <span class="text-danger"></span></label>
+                            <input type="file" name="image[]" multiple accept="image/*" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                      
                       <hr>
 
                       <div class="row">

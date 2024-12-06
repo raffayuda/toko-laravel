@@ -6,12 +6,13 @@ use App\Models\Brand;
 use App\Models\Color;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\ProductSize;
 use App\Models\SubCategory;
 use Illuminate\Support\Str;
+use App\Models\ProductColor;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\ProductColor;
-use App\Models\ProductSize;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -100,9 +101,10 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
 
-        // dd($request->all());
         $product = Product::find($id);
+        
         if(!empty($product)) {
+
             $product->title = $request->title;
             $product->sku = $request->sku;
             $product->sub_category_id = $request->sub_category_id;
@@ -139,6 +141,36 @@ class ProductController extends Controller
                     }
                 }
             }
+
+            if(!empty($request->file('image'))) {
+            // Pastikan folder exists
+            $upload_path = public_path('upload/product/');
+            if(!file_exists($upload_path)) {
+                mkdir($upload_path, 0777, true);
+            }
+
+            foreach ($request->file('image') as $value) {
+                if($value->isValid()) {
+                    $ext = $value->getClientOriginalExtension();
+                    $random = $product->id.Str::random(20);
+                    $filename = strtolower($random).'.'.$ext;
+
+                    // Pindahkan file
+                    try {
+                        $value->move($upload_path, $filename);
+                        
+                        // Simpan data gambar ke database
+                        $productImage = new ProductImage();
+                        $productImage->image_name = $filename;
+                        $productImage->image_extension = $ext;
+                        $productImage->product_id = $product->id;
+                        $productImage->save();
+                    } catch (\Exception $e) {
+                        return redirect()->back()->with('error', 'Failed to upload image: ' . $e->getMessage());
+                    }
+                }
+            }
+        }
 
             return redirect('admin/product/'. $product->id . '/edit')->with('success', 'Product Updated Successfully');
         }else{
