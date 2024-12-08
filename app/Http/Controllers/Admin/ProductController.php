@@ -186,4 +186,14 @@ class ProductController extends Controller
     {
         //
     }
+
+    public function deleteImage(Request $request) {
+        $image = ProductImage::find($request->id);
+        $image_path = public_path('upload/product/'.$image->image_name);
+        if(file_exists($image_path)) {
+            unlink($image_path);
+        }
+        $image->delete();
+        return redirect()->back()->with('success', 'Image Deleted Successfully');
+    }
 }

@@ -30,6 +30,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::resource('admin/subcategory', SubCategoryController::class);
     Route::post('admin/get_sub_category', [SubCategoryController::class, 'get_sub_category']);
     Route::resource('admin/product', ProductController::class);
+    Route::get('admin/product/image/{id}/delete', [ProductController::class, 'deleteImage']);
     Route::resource('admin/brand', BrandController::class);
     Route::resource('admin/color', ColorController::class);
 });

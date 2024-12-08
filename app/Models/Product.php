@@ -23,4 +23,9 @@ class Product extends Model
     {
         return $this->hasMany(ProductSize::class, 'product_id')->select('product_sizes.*');
     }
+
+    public function getImage()
+    {
+        return $this->hasMany(ProductImage::class, 'product_id')->select('product_images.*');
+    }
 }
