@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\HomeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,3 +36,4 @@ Route::group(['middleware' => 'admin'], function () {
     Route::resource('admin/color', ColorController::class);
 });
 
+Route::get('/', [HomeController::class, 'home']);
